@@ -53,8 +53,8 @@ const DEFAULT_CONTRACT_INDEXES = {
   'Qvault': 10,
   'MSVAULT': 11,
   'Msvault': 11,
-  'QBAY': 12,
-  'Qbay': 12,
+  'HM25': 12,
+  'Hm25': 12,
 };
 
 // Predefined RPC configurations
@@ -88,8 +88,8 @@ export const RPC_CONFIGS = {
       'Qvault': 10,
       'MSVAULT': 11,
       'Msvault': 11,
-      'QBAY': 12,
-      'Qbay': 12,
+      'HM25': 12,
+      'Hm25': 12,
       'Qswap': 13,
       'QSWAP': 13,
       // Add your testnet-specific contract indexes here

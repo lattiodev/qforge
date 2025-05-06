@@ -505,7 +505,7 @@ const ContractUI = () => {
             <li>Basic types: `uint8`-`uint64`, `sint8`-`sint64`, `bit`, `bool`</li>
             <li>Identity: `id` (60-char string)</li>
             <li>Fixed string: `char[size]`</li>
-            <li>Arrays: `Array&lt;type, size&gt;` (Input as JSON string, e.g., `["value1", "value2"]` or `[1, 2, 3]`)</li>
+            <li>Arrays: `Array&lt;type, size&gt;` (Input as JSON string, e.g., `[&quot;value1&quot;, &quot;value2&quot;]` or `[1, 2, 3]`)</li>
             <li>Complex: `ProposalDataT` (Input as JSON string)</li>
          </ul>
          <p className="text-[0.7rem] text-gray-500 mt-1">Note: Size for Arrays can be a number or known contract constant (e.g., `MSVAULT_MAX_OWNERS`). Nested complex types within arrays may have limitations.</p>

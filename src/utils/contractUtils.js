@@ -279,7 +279,48 @@ function decodeValue(dv, offset, type, size = 0) {
     let value;
     let fieldSize = 0;
 
-    if (type.includes('uint64') || type.includes('sint64')) {
+    if (type === 'OrderResponse') {
+        // OrderResponse struct layout:
+        // uint64 orderId (8 bytes)
+        // id originAccount (32 bytes)
+        // id destinationAccount (32 bytes)
+        // uint64 amount (8 bytes)
+        // Array<uint8, 64> memo (64 bytes)
+        // uint32 sourceChain (4 bytes)
+        const result = {};
+        
+        // orderId (uint64)
+        result.orderId = dv.getBigUint64(offset, true).toString();
+        offset += 8;
+        
+        // originAccount (id)
+        const originBytes = new Uint8Array(dv.buffer, dv.byteOffset + offset, 32);
+        result.originAccount = Buffer.from(originBytes).toString('hex');
+        offset += 32;
+        
+        // destinationAccount (id)
+        const destBytes = new Uint8Array(dv.buffer, dv.byteOffset + offset, 32);
+        result.destinationAccount = Buffer.from(destBytes).toString('hex');
+        offset += 32;
+        
+        // amount (uint64)
+        result.amount = dv.getBigUint64(offset, true).toString();
+        offset += 8;
+        
+        // memo (Array<uint8, 64>)
+        const memoBytes = new Uint8Array(dv.buffer, dv.byteOffset + offset, 64);
+        const nullIndex = memoBytes.indexOf(0);
+        const effectiveLength = nullIndex !== -1 ? nullIndex : 64;
+        result.memo = Buffer.from(memoBytes.slice(0, effectiveLength)).toString('utf-8');
+        offset += 64;
+        
+        // sourceChain (uint32)
+        result.sourceChain = dv.getUint32(offset, true);
+        offset += 4;
+        
+        value = result;
+        fieldSize = offset;
+    } else if (type.includes('uint64') || type.includes('sint64')) {
         fieldSize = 8;
         if (offset + fieldSize <= dv.byteLength) {
             value = type.includes('uint')
@@ -362,8 +403,7 @@ export function decodeContractResponse(responseData, outputFields) {
         const knownConstants = {
             'MSVAULT_MAX_OWNERS': 16,
             'MSVAULT_MAX_COOWNER': 8,
-            // Add other constants used in output array sizes if any
-            '1024': 1024, // Handle direct numbers in definitions like Array<uint32, 1024>
+            '1024': 1024,
         };
         const resolved = knownConstants[sizeStr];
         if (resolved === undefined) {
@@ -400,19 +440,23 @@ export function decodeContractResponse(responseData, outputFields) {
                  const { value: itemValue, readSize: itemSize } = decodeValue(dv, currentOffset, field.elementType);
                  items.push(itemValue);
                  currentOffset += itemSize;
-                 if (itemSize === 0) { // If decodeValue couldn't determine size, stop array processing
+                 if (itemSize === 0) {
                       console.warn(`Could not determine size for element type ${field.elementType} in array ${name}. Stopping array decode.`);
                       break;
                  }
             }
             result[name] = items;
-            offset = currentOffset; // Update main offset
-
+            offset = currentOffset;
+        } else if (type === 'OrderResponse') {
+            // Handle OrderResponse struct directly
+            const { value, readSize } = decodeValue(dv, offset, type);
+            result[name] = value;
+            offset += readSize;
         } else {
              const { value, readSize } = decodeValue(dv, offset, type);
              result[name] = value;
              offset += readSize;
-             if (readSize === 0) { // Stop processing if size is unknown
+             if (readSize === 0) {
                  console.warn(`Could not determine size for type ${type} (${name}). Stopping decode.`);
                  break;
              }

@@ -363,6 +363,7 @@ const ContractUI = () => {
       if (value === undefined || value === null) return <span className="text-gray-500 italic">null</span>;
       if (typeof value === 'boolean') return value ? <span className="text-green-500">true</span> : <span className="text-red-500">false</span>;
       if (Array.isArray(value)) return <pre className="text-xs bg-gray-700 p-1 rounded inline-block">{JSON.stringify(value)}</pre>;
+      if (typeof value === 'object') return <pre className="text-xs bg-gray-700 p-1 rounded inline-block">{JSON.stringify(value, null, 2)}</pre>;
       if (typeof value === 'string' && /^\d+$/.test(value) && value.length > 3) {
         try {
           return BigInt(value).toLocaleString();

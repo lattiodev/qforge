@@ -31,8 +31,8 @@ export const CONTRACT_INDEXES = {
   'Qvault': 10,
   'MSVAULT': 11,
   'Msvault': 11,
-  'QBAY': 12,
-  'Qbay': 12,
+  'HM25': 12,
+  'Hm25': 12,
 };
 
 // Helper function to get contract index

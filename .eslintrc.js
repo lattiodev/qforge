@@ -14,7 +14,8 @@ module.exports = {
     'default-case': 'off',
     'no-dupe-keys': 'off',
     'no-useless-escape': 'off',
-    'no-unreachable': 'off'
+    'no-unreachable': 'off',
+    'react/prop-types': 'off'
   },
   settings: {
     react: {

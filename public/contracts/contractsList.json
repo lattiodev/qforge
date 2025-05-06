@@ -10,6 +10,5 @@
     "Qearn.h",
     "QVAULT.h",
     "MsVault.h",
-    "Qbay.h",
-    "Qswap.h"
+    "HM25.h"
 ]

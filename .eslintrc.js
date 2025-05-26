@@ -15,8 +15,9 @@ module.exports = {
     'no-dupe-keys': 'off',
     'no-useless-escape': 'off',
     'no-unreachable': 'off',
-    'react/prop-types': 'off'
-
+    'react/prop-types': 'off',
+    'react/no-unescaped-entities': 'off',
+    'no-empty': 'off',
   },
   settings: {
     react: {

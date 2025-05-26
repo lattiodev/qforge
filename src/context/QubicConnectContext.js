@@ -55,6 +55,8 @@ const DEFAULT_CONTRACT_INDEXES = {
   'Msvault': 11,
   'QBAY': 12,
   'Qbay': 12,
+  'NOSTROMO': 13,
+  'Nostromo': 13,
 };
 
 // Predefined RPC configurations

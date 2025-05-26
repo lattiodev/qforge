@@ -33,6 +33,8 @@ export const CONTRACT_INDEXES = {
   'Msvault': 11,
   'QBAY': 12,
   'Qbay': 12,
+  'NOSTROMO': 13,
+  'Nostromo': 13,
 };
 
 // Helper function to get contract index

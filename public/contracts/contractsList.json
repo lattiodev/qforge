@@ -11,5 +11,6 @@
     "QVAULT.h",
     "MsVault.h",
     "Qbay.h",
-    "Qswap.h"
+    "Qswap.h",
+    "Nostromo.h"
 ]
